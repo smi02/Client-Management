@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../components/BackButton"
 
 const CreateClient = () => {
 
@@ -26,34 +27,41 @@ const CreateClient = () => {
     }
 
   return (
-    <>
-    <div className="container">
-        <h1>Create client</h1>
-        <form action="" onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="">Name</label>
-                <input type="text" name='name' placeholder='Name: ' onChange={handleChange} />
+    <div>
+    <div className="p-4">
+        <BackButton />
+        <h1 className="text-3xl my-4">Create client</h1>
+        <form action="" onSubmit={handleSubmit}
+        className="flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto">
+            <div className="my-4">
+                <label className="text-xl mr-4 text-gray-500" htmlFor="">Name</label>
+                <input type="text" name='name' placeholder='Name: ' onChange={handleChange}
+                className="border-2 border-gray-500 px-4 py-2 w-full" />
             </div>
-            <div>
-                <label htmlFor="">Age</label>
-                <input type="number" name='age' placeholder='Age: ' onChange={handleChange} />
+            <div className="my-4">
+                <label className="text-xl mr-4 text-gray-500" htmlFor="">Age</label>
+                <input type="number" name='age' placeholder='Age: ' onChange={handleChange}
+                className="border-2 border-gray-500 px-4 py-2 w-full" />
             </div>
-            <div>
-                <label htmlFor="">phone</label>
-                <input type="number" name='phone' placeholder='Phone: ' onChange={handleChange} />
+            <div className="my-4">
+                <label className="text-xl mr-4 text-gray-500" htmlFor="">phone</label>
+                <input type="number" name='phone' placeholder='Phone: ' onChange={handleChange}
+                className="border-2 border-gray-500 px-4 py-2 w-full" />
             </div>
-            <div>
-                <label htmlFor="">company</label>
-                <input type="text" name='company' placeholder='Company: ' onChange={handleChange} />
+            <div className="my-4">
+                <label className="text-xl mr-4 text-gray-500" htmlFor="">company</label>
+                <input type="text" name='company' placeholder='Company: ' onChange={handleChange}
+                className="border-2 border-gray-500 px-4 py-2 w-full" />
             </div>
-            <div>
-                <label htmlFor="">Web</label>
-                <input type="text" name='web' placeholder='Web: ' onChange={handleChange} />
+            <div className="my-4">
+                <label className="text-xl mr-4 text-gray-500" htmlFor="">Web</label>
+                <input type="text" name='web' placeholder='Web: ' onChange={handleChange}
+                className="border-2 border-gray-500 px-4 py-2 w-full" />
             </div>
-            <button type='submit'>Submit</button>
+            <button type='submit' className="p-2 bg-sky-300 m-8">Submit</button>
         </form>
     </div>
-    </>
+    </div>
   )
 }
 
