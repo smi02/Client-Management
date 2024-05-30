@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsInfoCircle } from 'react-icons/bs';
 import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
+import Narbar from '../components/Navbar';
 
 const ListClient = () => {
     const [clients, setClients] = useState([]);
@@ -19,27 +20,33 @@ const ListClient = () => {
             .catch((error) => console.log(error))
     }
 
-
     const deleteClient = (id) => {
-        axios.delete(`http://localhost/backend/${id}/delete`)
+        const check = confirm("Are you Sure?")
+        if (check == true) {
+            axios.delete(`http://localhost/backend/${id}/delete`)
             .then((res) => {
                 console.log(res.data)
                 getClients()
             })
             .catch((error) => console.log(error))
+        }
     }
 
     return (
+        <>
+        <Narbar />
         <div className='p-4'>
-            <h1 className='text-3xl my-8'>ListClient</h1>
-            <input type="text"
-                id='search'
-                placeholder='name...'
-                onChange={(e) => setSearch(e.target.value)}
-            />
+            <h1 className='text-3xl my-6'>ListClient</h1>
             <div>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center px-2">
+                <input type="text"
+                    id='search'
+                    placeholder='name...'
+                    onChange={(e) => setSearch(e.target.value)}
+                    className='px-3 py-1 font-semibold placeholder-gray-500 text-black rounded-md 
+                    border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2'
+                />
                 <Link to={"client/create"}> {/*to='/client/create' */}
                     <MdOutlineAddBox className='text-sky-800 text-4xl' />
                 </Link>
@@ -47,13 +54,13 @@ const ListClient = () => {
             <table className='w-full border-separate border-spacing-2'>
                 <thead>
                     <tr>
-                        <th className='border border-slate-600 rounded-md'>id</th>
-                        <th className='border border-slate-600 rounded-md'>name</th>
-                        <th className='border border-slate-600 rounded-md max-md:hidden'>age</th>
-                        <th className='border border-slate-600 rounded-md max-md:hidden'>phone</th>
-                        <th className='border border-slate-600 rounded-md max-md:hidden'>company</th>
-                        <th className='border border-slate-600 rounded-md max-md:hidden'>web</th>
-                        <th className='border border-slate-600 rounded-md max-md:hidden'>operation</th>
+                        <th className='border border-slate-600 rounded-md w-1/12'>No</th>
+                        <th className='border border-slate-600 rounded-md w-2/12'>name</th>
+                        <th className='border border-slate-600 rounded-md w-1/12'>age</th>
+                        <th className='border border-slate-600 rounded-md w-2/12'>phone</th>
+                        <th className='border border-slate-600 rounded-md w-2/12'>company</th>
+                        <th className='border border-slate-600 rounded-md w-2/12'>web</th>
+                        <th className='border border-slate-600 rounded-md w-2/12'>operation</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,12 +68,12 @@ const ListClient = () => {
                         return search.toLowerCase() === "" ? item : item.name.toLowerCase().includes(search)
                     }).map((client, index) => (
                         <tr key={index}>
-                            <td className='border border-slate-700 rounded-md text-center'>{client.id}</td>
-                            <td className='border border-slate-700 rounded-md text-center'>{client.name}</td>
-                            <td className='border border-slate-700 rounded-md text-center max-md:hidden'>{client.age}</td>
-                            <td className='border border-slate-700 rounded-md text-center max-md:hidden'>{client.phone}</td>
-                            <td className='border border-slate-700 rounded-md text-center max-md:hidden'>{client.company}</td>
-                            <td className='border border-slate-700 rounded-md text-center max-md:hidden'>{client.web}</td>
+                            <td className='border border-slate-700 rounded-md text-center w-1/12'>{index + 1}</td>
+                            <td className='border border-slate-700 rounded-md text-center w-2/12'>{client.name}</td>
+                            <td className='border border-slate-700 rounded-md text-center w-1/12'>{client.age}</td>
+                            <td className='border border-slate-700 rounded-md text-center w-2/12'>{client.phone}</td>
+                            <td className='border border-slate-700 rounded-md text-center w-2/12'>{client.company}</td>
+                            <td className='border border-slate-700 rounded-md text-center w-2/12'>{client.web}</td>
                             <td className='border border-slate-700 rounded-md text-center'>
                                 <div className='flex justify-center gap-x-4'>
                                     <Link to={`client/${client.id}`}>
@@ -85,6 +92,7 @@ const ListClient = () => {
                 </tbody>
             </table>
         </div>
+        </>
     )
 }
 
