@@ -1,9 +1,9 @@
 <?php
     class connect {
         private $dbHost = "localhost";
-        private $dbName = "client";
-        private $dbUser = "root";
-        private $dbPass = "";
+        private $dbName = "id22240242_clients";
+        private $dbUser = "id22240242_root";
+        private $dbPass = "1572881996@Dq";
 
         public function connect() {
             try {
