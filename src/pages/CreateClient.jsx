@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton"
+import toast from "react-hot-toast";
 
 const CreateClient = () => {
 
     const [data, setData] = useState([]);
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const login = localStorage.getItem("login")
+        if (!login) {
+          navigate('/')
+        }
+      }, [])
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -18,9 +26,10 @@ const CreateClient = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post("http://localhost/backend/save", data)
+        axios.post("https://backend-client-management.000webhostapp.com/backend/save", data)
         .then(res => {
             console.log(res.data);
+            toast.success('Create Successful.')
             navigate('/')
         })
         .catch((error) => console.log(error))

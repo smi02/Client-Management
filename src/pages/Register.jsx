@@ -2,7 +2,7 @@ import axios from "axios"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
-import BackButton from "../components/BackButton"
+import BackButtonLogin from "../components/BackButtonLogin"
 
 const Register = () => {
 
@@ -12,30 +12,31 @@ const Register = () => {
         password: ''
     })
     const navigate = useNavigate()
+
     const registerUser = async (e) => {
         e.preventDefault()
-        const { name, email, password } = data
-        try {
-            const { data } = await axios.post('http://localhost/backend/users.php/save',
-                { name, email, password })
-            if (data.error) {
-                toast.error(data.error)
-            } else {
-                setData({})
-                toast.success('Register Successful. Welcome!')
-                navigate('/login')
-            }
-        } catch (error) {
-            alert('An error happened. Please check console')
-            console.log(error);
+        if (data.name == '' || data.email == '' || data.password == '') {
+            return toast.error('You need to fill in all the blank boxes')
         }
+        axios.post("http://backend-client-management.000webhostapp.com/backend/users.php", data)
+            .then(res => {
+                const check = res.data.status
+                if (check == 1) {
+                    toast.success('Register Successful.')
+                    setData({})
+                    navigate('/login')
+                } else if (check == 0) {
+                    toast.error("Wrong data.")
+                }
+            })
+            .catch((error) => console.log(error))
     }
 
 
     return (
         <div className="flex justify-center items-center h-screen bg-indigo-300">
             <div className="w-96 p-6 shadow-lg bg-white rounded-md">
-                <BackButton />
+                <BackButtonLogin />
                 <h1 className="text-3xl block text-center font-semibold">Register</h1>
                 <label className="block text-base mb-2">Name</label>
                 <input type="text" placeholder="enter name ..."

@@ -1,16 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import BackButton from "../components/BackButton";
 
 const ShowClient = () => {
 
   const [data, setData] = useState([]);
+  const navigate = useNavigate()
 
   const { id } = useParams()
 
   useEffect(() => {
-    axios.get(`http://localhost/backend/${id}`)
+    const login = localStorage.getItem("login")
+    if (!login) {
+      navigate('/')
+    }
+
+    axios.get(`https://backend-client-management.000webhostapp.com/backend/${id}`)
       .then(res => {
         setData(res.data)
       })
@@ -21,7 +27,7 @@ const ShowClient = () => {
     <div className="p-4">
       <BackButton />
       <h1 className="text-3xl my-4">Info client</h1>
-      <div className='flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4'>
+      <div className='flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4 mx-auto'>
         <div className='my-4'>
           <span className='text-xl mr-4 text-gray-500'>Name</span>
           <span>{data.name}</span>
