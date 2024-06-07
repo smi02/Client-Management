@@ -17,7 +17,7 @@ const ListClient = () => {
 
 
     const getClients = () => {
-        axios.get('https://backend-client-management.000webhostapp.com/backend')
+        axios.get('https://backend-client-management.000webhostapp.com/backend/')
             .then((res) => setClients(res.data))
             .catch((error) => console.log(error))
     }
@@ -25,10 +25,15 @@ const ListClient = () => {
     const deleteClient = (id) => {
         const check = confirm("Are you Sure?")
         if (check == true) {
-            axios.delete(`https://backend-client-management.000webhostapp.com/backend/${id}/delete`)
+            axios.post('https://backend-client-management.000webhostapp.com/backend/', { id: id, method: "delete" }, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
                 .then((res) => {
                     console.log(res.data)
                     toast.success('Delete Successful.')
+                    toast.loading('Wait a minute for the list to reload.');
                     getClients()
                 })
                 .catch((error) => console.log(error))

@@ -7,7 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 const UpdateUser = () => {
 
     const [data, setData] = useState([]);
-    const [datas, setDatas] = useState([])
 
     const id = localStorage.getItem("id")
 
@@ -23,7 +22,7 @@ const UpdateUser = () => {
         axios.get(`https://backend-client-management.000webhostapp.com/backend/users.php/${id}`)
             .then(res => {
                 setData(res.data)
-                setDatas(res.data)
+                setData(method => ({...method, method: "put"}))
             })
             .catch((error) => console.log(error))
     }, [])
@@ -36,8 +35,11 @@ const UpdateUser = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(data);
-        axios.put(`https://backend-client-management.000webhostapp.com/backend/users.php/${id}/edit`, data)
+        axios.post('https://backend-client-management.000webhostapp.com/backend/users.php', data, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          })
             .then(res => {
                 const check = res.data.status
                 if (check == 1) {
@@ -46,11 +48,6 @@ const UpdateUser = () => {
                     navigate(`/home/user/${id}`)
                 } else if (check == 0) {
                     toast.error("Error")
-                    setData({
-                        name: datas.name,
-                        email: datas.email,
-                        password: '',
-                    })
                 }
             })
             .catch((error) => console.log(error))

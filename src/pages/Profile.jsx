@@ -13,6 +13,11 @@ const Profile = () => {
 
   const id = localStorage.getItem("id")
 
+  const deletedata = {
+    id: id,
+    method: "delete"
+  }
+
   useEffect(() => {
     const login = localStorage.getItem("login")
     if (!login) {
@@ -26,10 +31,14 @@ const Profile = () => {
       .catch((error) => console.log(error))
   }, [])
 
-  const deleteUser = (id) => {
+  const deleteUser = () => {
     const check = confirm("Are you Sure?")
     if (check == true) {
-      axios.delete(`https://backend-client-management.000webhostapp.com/backend/users.php/${id}/delete`)
+      axios.post('https://backend-client-management.000webhostapp.com/backend/users.php', deletedata,  {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
         .then((res) => {
           console.log(res.data)
           localStorage.setItem("login", "")

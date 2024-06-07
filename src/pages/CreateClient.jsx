@@ -6,8 +6,15 @@ import toast from "react-hot-toast";
 
 const CreateClient = () => {
 
-    const [data, setData] = useState([]);
-
+    const [data, setData] = useState({
+        name: "",
+        age: "",
+        phone: "",
+        company: "",
+        web: "",
+        method: "post",
+    });
+    
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -23,14 +30,17 @@ const CreateClient = () => {
         setData(values => ({...values, [name]: value}))
     }
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post("https://backend-client-management.000webhostapp.com/backend/save", data)
+        axios.post("https://backend-client-management.000webhostapp.com/backend/save", data, {headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }})
         .then(res => {
             console.log(res.data);
             toast.success('Create Successful.')
-            navigate('/')
+            navigate('/home')
         })
         .catch((error) => console.log(error))
     }

@@ -9,9 +9,9 @@ const Login = () => {
 
   const navigate = useNavigate()
   const [data, setData] = useState({
-    name: false,
-    email: '',
-    password: '',
+    email: "",
+    password: "",
+    method: "login"
   })
 
   useEffect(() => {
@@ -28,13 +28,18 @@ const Login = () => {
   const loginUser = async (e) => {
     e.preventDefault()
 
-    if (data.email == '' || data.password == '') {
+    if (data.email == "" || data.password == "") {
       return toast.error('You need to fill in all the blank boxes')
     }
 
-    axios.post("https://backend-client-management.000webhostapp.com/backend/users.php", data)
+    toast.loading('Wait a minute ...');
+
+    axios.post("https://backend-client-management.000webhostapp.com/backend/users.php", data, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
       .then(res => {
-        console.log(res.data);
         const check = res.data.status
         if (check == 1) {
           toast.success('Login Successful. Welcome!')
@@ -45,9 +50,9 @@ const Login = () => {
         } else if (check == 0) {
           toast.error("Wrong email or password")
           setData({
-            name: false,
             email: '',
             password: '',
+            method: "login"
           })
         }
       })

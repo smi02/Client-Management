@@ -15,8 +15,6 @@ const Navbarlogin = () => {
             .catch((error) => console.log(error))
     }, [])
 
-    console.log(user);
-
     const handleLogout = () => {
         localStorage.setItem("login", "")
         localStorage.setItem("id", "")

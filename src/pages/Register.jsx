@@ -9,7 +9,8 @@ const Register = () => {
     const [data, setData] = useState({
         name: '',
         email: '',
-        password: ''
+        password: '',
+        method: "post"
     })
     const navigate = useNavigate()
 
@@ -18,7 +19,11 @@ const Register = () => {
         if (data.name == '' || data.email == '' || data.password == '') {
             return toast.error('You need to fill in all the blank boxes')
         }
-        axios.post("http://backend-client-management.000webhostapp.com/backend/users.php", data)
+        axios.post("http://backend-client-management.000webhostapp.com/backend/users.php", data, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          })
             .then(res => {
                 const check = res.data.status
                 if (check == 1) {

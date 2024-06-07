@@ -22,10 +22,10 @@ const UpdateClient = () => {
         axios.get(`https://backend-client-management.000webhostapp.com/backend/${id}`)
             .then(res => {
                 setData(res.data)
+                setData(method => ({...method, method: "put"}))
             })
             .catch((error) => console.log(error))
     }, [])
-
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -35,11 +35,14 @@ const UpdateClient = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`https://backend-client-management.000webhostapp.com/backend/${id}/edit`, data)
+        axios.post('https://backend-client-management.000webhostapp.com/backend/', data, {headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }})
             .then(res => {
                 console.log(res.data);
                 toast.success('Update Successful.')
-                navigate('/')
+                toast.loading('Wait a minute for the list to reload.');
+                navigate('/home')
             })
             .catch((error) => console.log(error))
     }
