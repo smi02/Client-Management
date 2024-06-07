@@ -32,8 +32,6 @@ const Login = () => {
       return toast.error('You need to fill in all the blank boxes')
     }
 
-    toast.loading('Wait a minute ...');
-
     axios.post("https://backend-client-management.000webhostapp.com/backend/users.php", data, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
