@@ -28,7 +28,7 @@ const Navbarlogin = () => {
             <Link to={`user/${id}`}>
                 <FaRegUserCircle className='my-2 text-2xl text-black rounded-x hover:text-blue-400' />
             </Link>
-            <div className="py-2 rounded-xl font-medium text-gray-600">Hi {user.name}</div>
+            <div className="py-2 rounded-xl font-medium text-gray-600 ml-1">Hi {user.name}</div>
             <button className=" px-4 py-2 rounded-xl font-medium text-gray-600 hover:text-blue-400"
                 onClick={handleLogout}>Log out</button>
         </div>

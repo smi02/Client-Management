@@ -2,10 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import BackButton from "../components/BackButton";
+import Loading from "../components/Loading";
 
 const ShowClient = () => {
 
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
 
   const { id } = useParams()
@@ -16,15 +18,20 @@ const ShowClient = () => {
       navigate('/')
     }
 
+    setLoading(true)
+
     axios.get(`https://backend-client-management.000webhostapp.com/backend/${id}`)
       .then(res => {
         setData(res.data)
+        setLoading(false)
       })
       .catch((error) => console.log(error))
   }, [])
 
   return (
-    <div className="p-4">
+    <>
+    {loading ? (<Loading />) : (
+      <div className="p-4">
       <BackButton />
       <h1 className="text-3xl my-4">Info client</h1>
       <div className='flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4 mx-auto'>
@@ -50,6 +57,8 @@ const ShowClient = () => {
         </div>
       </div>
     </div>
+    )}
+    </>
   )
 }
 

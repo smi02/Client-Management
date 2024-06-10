@@ -43,16 +43,16 @@ const Register = () => {
             <div className="w-96 p-6 shadow-lg bg-white rounded-md">
                 <BackButtonLogin />
                 <h1 className="text-3xl block text-center font-semibold">Register</h1>
-                <label className="block text-base mb-2">Name</label>
-                <input type="text" placeholder="enter name ..."
+                <label className="block text-base mb-2" htmlFor="name">Name</label>
+                <input type="text" placeholder="enter name ..." id="name"
                     value={data.name} onChange={(e) => setData({ ...data, name: e.target.value })}
                     className="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600" />
-                <label className="block text-base mb-2 mt-5">Email</label>
-                <input type="email" placeholder="enter email ..."
+                <label className="block text-base mb-2 mt-5" htmlFor="email">Email</label>
+                <input type="email" placeholder="enter email ..." id="email"
                     value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })}
                     className="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600" />
-                <label className="block text-base mb-2 mt-5">Password</label>
-                <input type="password" placeholder="enter password ..."
+                <label className="block text-base mb-2 mt-5" htmlFor="password">Password</label>
+                <input type="password" placeholder="enter password ..." id="password"
                     value={data.password} onChange={(e) => setData({ ...data, password: e.target.value })}
                     className="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600" />
                 <button onClick={registerUser} className="mt-5 border-indigo-700 bg-indigo-700 text-white px-5 py-1 w-full

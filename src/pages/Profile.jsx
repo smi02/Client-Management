@@ -5,10 +5,12 @@ import BackButton from "../components/BackButton";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
 import toast from "react-hot-toast";
+import Loading from "../components/Loading";
 
 const Profile = () => {
 
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
 
   const id = localStorage.getItem("id")
@@ -23,10 +25,12 @@ const Profile = () => {
     if (!login) {
       navigate('/')
     }
+    setLoading(true)
 
     axios.get(`https://backend-client-management.000webhostapp.com/backend/users.php/${id}`)
       .then(res => {
         setData(res.data)
+        setLoading(false)
       })
       .catch((error) => console.log(error))
   }, [])
@@ -52,7 +56,9 @@ const Profile = () => {
   }
 
   return (
-    <div className="p-4">
+    <>
+    {loading ? (<Loading />) : (
+      <div className="p-4">
       <BackButton />
       <h1 className="text-3xl my-4">Profile</h1>
       <div className='flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4 mx-auto'>
@@ -74,6 +80,8 @@ const Profile = () => {
         </div>
       </div>
     </div>
+    )}
+    </>
   )
 }
 

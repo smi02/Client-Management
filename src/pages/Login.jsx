@@ -32,7 +32,7 @@ const Login = () => {
       return toast.error('You need to fill in all the blank boxes')
     }
 
-    axios.post("https://backend-client-management.000webhostapp.com/backend/users.php", data, {
+    axios.post("https://backend-client-management.000webhostapp.com/backend/users.php/", data, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -64,12 +64,12 @@ const Login = () => {
           <BackButtonLogin />
           <h1 className="text-3xl block text-center font-semibold">Login</h1>
           <form onSubmit={loginUser}>
-            <label className="block text-base mb-2">Email</label>
-            <input type="email" placeholder="enter email ..."
+            <label className="block text-base mb-2" htmlFor="email">Email</label>
+            <input type="email" placeholder="enter email ..." id="email"
               value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })}
               className="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600" />
-            <label className="block text-base mb-2 mt-5">Password</label>
-            <input type="password" placeholder="enter password ..."
+            <label className="block text-base mb-2 mt-5" htmlFor="password">Password</label>
+            <input type="password" placeholder="enter password ..." id="password"
               value={data.password} onChange={(e) => setData({ ...data, password: e.target.value })}
               className="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600" />
             <button type="submit" className="mt-5 border-indigo-700 bg-indigo-700 text-white px-5 py-1 w-full

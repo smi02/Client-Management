@@ -3,11 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import BackButton from "../components/BackButton";
 import toast from "react-hot-toast";
+import Loading from "../components/Loading";
 
 const UpdateClient = () => {
 
     const [data, setData] = useState([]);
-
+    const [loading, setLoading] = useState(false);
     const { id } = useParams()
 
     const navigate = useNavigate()
@@ -18,11 +19,13 @@ const UpdateClient = () => {
         if (!login) {
             navigate('/')
         }
+        setLoading(true)
 
         axios.get(`https://backend-client-management.000webhostapp.com/backend/${id}`)
             .then(res => {
                 setData(res.data)
                 setData(method => ({...method, method: "put"}))
+                setLoading(false)
             })
             .catch((error) => console.log(error))
     }, [])
@@ -41,14 +44,15 @@ const UpdateClient = () => {
             .then(res => {
                 console.log(res.data);
                 toast.success('Update Successful.')
-                toast.loading('Wait a minute for the list to reload.');
                 navigate('/home')
             })
             .catch((error) => console.log(error))
     }
 
     return (
-        <div className="p-4">
+        <>
+        {loading ? (<Loading />) : (
+            <div className="p-4">
             <BackButton />
             <h1 className="text-3xl my-4">Update client</h1>
             <form action="" onSubmit={handleSubmit}
@@ -81,6 +85,8 @@ const UpdateClient = () => {
                 <button type='submit' name="update" className="p-2 bg-sky-300 m-8">Submit</button>
             </form>
         </div>
+        )}
+        </>
     )
 }
 

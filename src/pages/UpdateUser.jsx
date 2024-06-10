@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BsArrowLeft } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 
 const UpdateUser = () => {
 
     const [data, setData] = useState([]);
-
+    const [loading, setLoading] = useState(false);
     const id = localStorage.getItem("id")
 
     const navigate = useNavigate()
@@ -19,10 +20,13 @@ const UpdateUser = () => {
             navigate('/')
         }
 
+        setLoading(true)
+
         axios.get(`https://backend-client-management.000webhostapp.com/backend/users.php/${id}`)
             .then(res => {
                 setData(res.data)
-                setData(method => ({...method, method: "put"}))
+                setData(method => ({ ...method, method: "put" }))
+                setLoading(false)
             })
             .catch((error) => console.log(error))
     }, [])
@@ -35,11 +39,11 @@ const UpdateUser = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('https://backend-client-management.000webhostapp.com/backend/users.php', data, {
+        axios.post('https://backend-client-management.000webhostapp.com/backend/users.php/', data, {
             headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded'
             }
-          })
+        })
             .then(res => {
                 const check = res.data.status
                 if (check == 1) {
@@ -54,34 +58,38 @@ const UpdateUser = () => {
     }
 
     return (
-        <div className="p-4">
-            <div className="flex">
-                <Link to={`/home/user/${id}`}
-                    className="bg-sky-800 text-white px-3 py-1 rounded-md w-fit">
-                    <BsArrowLeft className="text-2xl" />
-                </Link>
-            </div>
-            <h1 className="text-3xl my-4">Update client</h1>
-            <form action="" onSubmit={handleSubmit}
-                className="flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto">
-                <div className="my-4">
-                    <label className="text-xl mr-4 text-gray-500" htmlFor="">Name</label>
-                    <input type="text" name='name' placeholder='Name: ' value={data.name} onChange={handleChange}
-                        className="border-2 border-gray-500 px-4 py-2 w-full" />
+        <>
+            {loading ? (<Loading />) : (
+                <div className="p-4">
+                    <div className="flex">
+                        <Link to={`/home/user/${id}`}
+                            className="bg-sky-800 text-white px-3 py-1 rounded-md w-fit">
+                            <BsArrowLeft className="text-2xl" />
+                        </Link>
+                    </div>
+                    <h1 className="text-3xl my-4">Update client</h1>
+                    <form action="" onSubmit={handleSubmit}
+                        className="flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto">
+                        <div className="my-4">
+                            <label className="text-xl mr-4 text-gray-500" htmlFor="">Name</label>
+                            <input type="text" name='name' placeholder='Name: ' value={data.name} onChange={handleChange}
+                                className="border-2 border-gray-500 px-4 py-2 w-full" />
+                        </div>
+                        <div className="my-4">
+                            <label className="text-xl mr-4 text-gray-500" htmlFor="">Email</label>
+                            <input type="email" name='age' placeholder='Email: ' value={data.email} onChange={handleChange}
+                                className="border-2 border-gray-500 px-4 py-2 w-full" />
+                        </div>
+                        <div className="my-4">
+                            <label className="text-xl mr-4 text-gray-500" htmlFor="">password</label>
+                            <input type="password" name='password' placeholder='Password: ' onChange={handleChange}
+                                className="border-2 border-gray-500 px-4 py-2 w-full" />
+                        </div>
+                        <button type='submit' name="update" className="p-2 bg-sky-300 m-8">Submit</button>
+                    </form>
                 </div>
-                <div className="my-4">
-                    <label className="text-xl mr-4 text-gray-500" htmlFor="">Email</label>
-                    <input type="email" name='age' placeholder='Email: ' value={data.email} onChange={handleChange}
-                        className="border-2 border-gray-500 px-4 py-2 w-full" />
-                </div>
-                <div className="my-4">
-                    <label className="text-xl mr-4 text-gray-500" htmlFor="">password</label>
-                    <input type="password" name='password' placeholder='Password: ' onChange={handleChange}
-                        className="border-2 border-gray-500 px-4 py-2 w-full" />
-                </div>
-                <button type='submit' name="update" className="p-2 bg-sky-300 m-8">Submit</button>
-            </form>
-        </div>
+            )}
+        </>
     )
 }
 
